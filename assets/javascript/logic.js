@@ -27,14 +27,15 @@ $(document).ready(function(){
   	var attractions = $("#attractions");
   	var restaurants = $("#restaurants");
   	var eventfulAPI = "app_key=Qm9xNFv7PP2fqZVZ";
-  	var eventfulURL = "http://api.eventful.com/rest/events/search?"
-	var queryURL = "http://api.eventful.com/rest/events/search?" + "app_key=Qm9xNFv7PP2fqZVZ&" + "Houston" + "&" + "books";
+  	var eventfulURL = "http://api.eventful.com/events/search?"
+	//var queryURL = "http://api.eventful.com/json/events/search?app_key=Qm9xNFv7PP2fqZVZ&l=houston";
+	var queryURL = "http://api.eventful.com/json/events/search?keywords=music&location=Singapore&app_key=Qm9xNFv7PP2fqZVZ";	
 		console.log(queryURL);
 
   	$.ajax({
       url: queryURL,
       method: "GET"
     }).done(function(response) {
-        console.log(response.data);
+        console.log(response);
     });
 });
