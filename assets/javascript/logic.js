@@ -23,6 +23,18 @@ $(document).ready(function(){
   	var loginsub = $("#loginsubmit");
   	var userlocation = $("#userlocation");
   	var calendar = $("#calendar");
+  	var events = $("#events");
+  	var attractions = $("#attractions");
+  	var restaurants = $("#restaurants");
+  	var eventfulAPI = "app_key=Qm9xNFv7PP2fqZVZ";
+  	var eventfulURL = "http://api.eventful.com/rest/events/search?"
+	var queryURL = "http://api.eventful.com/rest/events/search?" + "app_key=Qm9xNFv7PP2fqZVZ&" + "Houston" + "&" + "books";
+		console.log(queryURL);
 
-
+  	$.ajax({
+      url: queryURL,
+      method: "GET"
+    }).done(function(response) {
+        console.log(response.data);
+    });
 });
