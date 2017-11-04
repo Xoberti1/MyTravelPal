@@ -28,7 +28,8 @@ $(document).ready(function(){
   	var restaurants = $("#restaurants");
   	var eventfulAPI = "app_key=Qm9xNFv7PP2fqZVZ";
   	var eventfulURL = "http://api.eventful.com/rest/events/search?"
-	var queryURL = "http://api.eventful.com/rest/events/search?" + "app_key=Qm9xNFv7PP2fqZVZ&" + "Houston" + "&" + "books";
+	var queryURL = "http://api.eventful.com/json/events/search?app_key=Qm9xNFv7PP2fqZVZ&l=houston";
+		//var queryURL = "http://eventful.com/events?q=music&l=Finland"
 		console.log(queryURL);
 
   	$.ajax({
