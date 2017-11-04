@@ -64,7 +64,7 @@ $(document).ready(function(){
     .catch(function(error){
      console.log('sign-in error', error.code)
     })
-    
+
   });
 
   //sign-up event
@@ -85,7 +85,7 @@ $(document).ready(function(){
       window.location.href="locationselector.html";
     })
     .catch(function(error){
-      console.log('sign-in error', error)  
+      console.log('sign-in error', error)
     })
     //window.location.href="locationselector.html";
   });
@@ -107,7 +107,7 @@ $(document).ready(function(){
       logout.show();
       //window.location.href="locationselector.html";
 
-    } 
+    }
     else{
       console.log("not a user");
        logout.hide();
@@ -115,5 +115,5 @@ $(document).ready(function(){
       // $("#signin-page").show();
       // $("#game-page").hide();
     };
-  }); 
+  });
 });
