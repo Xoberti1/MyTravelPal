@@ -32,11 +32,15 @@ $(document).ready(function(){
 		var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=Singapore&app_key=Qm9xNFv7PP2fqZVZ";
     console.log(eventfulQuery);
 
-  	$.ajax({
-      url: eventfulQuery,
-      method: "GET"
-    }).done(function(response) {
-        console.log(response);
+
+    $("#submit").on("click", function(){
+      event.preventDefault();
+    	$.ajax({
+        url: eventfulQuery,
+        method: "GET"
+      }).done(function(response) {
+          console.log(response);
+      });
     });
 
     logout.hide();
@@ -54,10 +58,13 @@ $(document).ready(function(){
     console.log(pass)
     //console.log(displayname)
     //Sign-in
-    auth.signInWithEmailAndPassword(emailval, pass)
+    auth.signInWithEmailAndPassword(emailval, pass).then(function(){
+      window.location.href="locationselector.html";
+    })
     .catch(function(error){
      console.log('sign-in error', error.code)
     })
+    
   });
 
   //sign-up event
@@ -74,13 +81,13 @@ $(document).ready(function(){
     console.log(pass);
     //console.log(displayname);
     //Sign-in
-    auth.createUserWithEmailAndPassword(emailval, pass)
-    // .then(function(user){
-    // user.updateProfile({displayName: displayname})
-    // })
-    .catch(function(error){
-      console.log('sign-in error', error)
+    auth.createUserWithEmailAndPassword(emailval, pass).then(function(){
+      window.location.href="locationselector.html";
     })
+    .catch(function(error){
+      console.log('sign-in error', error)  
+    })
+    //window.location.href="locationselector.html";
   });
 
   //logout event
@@ -92,18 +99,13 @@ $(document).ready(function(){
   firebase.auth().onAuthStateChanged(function(user) {
     if(user) {
       console.log("They're a user");
-      //var displayName = user.displayName;
       var email = user.email;
       var uid = user.uid;
-      //console.log(user);
       console.log(email);
       console.log(uid);
-    //console.log(displayName);
       logout.show();
-      window.location.href="locationselector.html";
-    // login.hide();
-    //   $("#signin-page").hide();
-    //   $("#game-page").show();
+      //window.location.href="locationselector.html";
+
     } 
     else{
       console.log("not a user");
