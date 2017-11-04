@@ -11,10 +11,10 @@ $(document).ready(function(){
 
 	firebase.initializeApp(config);
 
-	var database = firebase.database();
-	var auth = firebase.auth();
-	var user = firebase.auth().currentUser;
-	var email = $("#email");
+	 var database = firebase.database();
+	 var auth = firebase.auth();
+	 var user = firebase.auth().currentUser;
+	 var email = $("#email");
   	var password = $("#password");
   	var login = $("#login");
   	var signup = $("#signup");
@@ -27,13 +27,13 @@ $(document).ready(function(){
   	var attractions = $("#attractions");
   	var restaurants = $("#restaurants");
   	var eventfulAPI = "app_key=Qm9xNFv7PP2fqZVZ";
-  	var eventfulURL = "http://api.eventful.com/json/events/search?"
+  	var eventfulURL = "https://api.eventful.com/json/events/search?"
 	 //var queryURL = "http://api.eventful.com/rest/events/search?" + "app_key=Qm9xNFv7PP2fqZVZ&" + "Houston" + "&" + "books";
-		var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=Singapore&app_key=Qm9xNFv7PP2fqZVZ";
+		var eventfulQuery = "https://api.eventful.com/json/events/search?keywords=music&location=Singapore&app_key=Qm9xNFv7PP2fqZVZ";
     console.log(eventfulQuery);
 
 
-    $("#submit").on("click", function(){
+    $("#submit").on("click", function(event){
       event.preventDefault();
     	$.ajax({
         url: eventfulQuery,
@@ -45,7 +45,7 @@ $(document).ready(function(){
 
     logout.hide();
 
-    login.on('click', function() {
+    login.on('click', function(event) {
       console.log("login ran");
     //get email and password
     event.preventDefault();
@@ -68,7 +68,7 @@ $(document).ready(function(){
   });
 
   //sign-up event
-  signup.on('click', function() {
+  signup.on('click', function(event) {
     console.log("logout ran");
     //get email and password
     event.preventDefault();
@@ -93,6 +93,7 @@ $(document).ready(function(){
   //logout event
   logout.on('click', function() {
     firebase.auth().signOut();
+    window.location.href="homepage.html";
   });
 
   //make sure the user is a user
