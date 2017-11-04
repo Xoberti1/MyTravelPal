@@ -3,13 +3,30 @@
 .circle-div {
 	width: 400px;
     height: 400px;
-    background: red;
+    background-image: url(../css/globe.jpg);
+    background-position: center;
     -moz-border-radius: 50px;
     -webkit-border-radius: 50px;
     border-radius: 50%;
     margin: 0 auto
+
 }
 
 form {
 	padding-top: 50px;
+	margin: auto;
+	width: 250px;
+	height: 150px;
+	text-align: center;
+}
+
+.panel{
+	border: none;
+	border-style: none;
+	margin-bottom: 0px;
+}
+
+.jumbotron {
+	text-align: center;
+	background-color: white;
 }
