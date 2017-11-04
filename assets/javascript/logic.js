@@ -33,7 +33,7 @@ $(document).ready(function(){
     console.log(eventfulQuery);
 
 
-    $("#submit").on("click", function(){
+    $("#submit").on("click", function(event){
       event.preventDefault();
     	$.ajax({
         url: eventfulQuery,
@@ -45,7 +45,7 @@ $(document).ready(function(){
 
     logout.hide();
 
-    login.on('click', function() {
+    login.on('click', function(event) {
       console.log("login ran");
     //get email and password
     event.preventDefault();
@@ -64,11 +64,11 @@ $(document).ready(function(){
     .catch(function(error){
      console.log('sign-in error', error.code)
     })
-    
+
   });
 
   //sign-up event
-  signup.on('click', function() {
+  signup.on('click', function(event) {
     console.log("logout ran");
     //get email and password
     event.preventDefault();
@@ -85,7 +85,7 @@ $(document).ready(function(){
       window.location.href="locationselector.html";
     })
     .catch(function(error){
-      console.log('sign-in error', error)  
+      console.log('sign-in error', error)
     })
     //window.location.href="locationselector.html";
   });
@@ -106,7 +106,7 @@ $(document).ready(function(){
       logout.show();
       //window.location.href="locationselector.html";
 
-    } 
+    }
     else{
       console.log("not a user");
        logout.hide();
@@ -114,5 +114,5 @@ $(document).ready(function(){
       // $("#signin-page").show();
       // $("#game-page").hide();
     };
-  }); 
+  });
 });
