@@ -115,4 +115,17 @@ $(document).ready(function(){
       // $("#game-page").hide();
     };
   });
+
+	//Location Selector Page
+
+	//create calendar
+  $(function () {
+    $("#datepicker").datepicker({
+          inline: true,
+          firstDay: 1,
+          showOtherMonths: true,
+          dayNamesMin: ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat", "Sun"]
+    });
+  });
+
 });

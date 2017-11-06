@@ -30,3 +30,8 @@ form {
 	text-align: center;
 	background-color: white;
 }
+
+#datepicker {
+	background-color: black;
+	height: 100px;
+}
