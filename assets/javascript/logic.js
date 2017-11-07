@@ -138,7 +138,6 @@ $(document).ready(function() {
     });
   });
 
-
   submit.on("click", function() {
     var locationVal = userlocation.val();
     var calendarVal = calendar.val();
