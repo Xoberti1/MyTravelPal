@@ -20,6 +20,7 @@ $(document).ready(function() {
   var signup = $("#signup");
   var logout = $("#logout");
   var submit = $("#submit");
+  var submit2 = $("#submit2");
   var signupsub = $("#signupsubmit");
   var loginsub = $("#loginsubmit");
   var userlocation = $("#userlocation");
@@ -33,15 +34,13 @@ $(document).ready(function() {
   var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=" + userlocation + "&app_key=Qm9xNFv7PP2fqZVZ";
   console.log(eventfulQuery);
 
-  $("#submit").on("click", function(event) {
-    event.preventDefault();
     $.ajax({
       url: eventfulQuery,
-      method: "GET"
+      method: "GET",
+      dataType: 'jsonp'
     }).done(function(response) {
       console.log(response);
     });
-  });
 
   logout.hide();
 
@@ -116,7 +115,6 @@ $(document).ready(function() {
   });
 
   //Location Selector Page
-
   var googleQuery = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCmuGjtB5AKU9b4DFOD3c6m7g2I4jlTP_4&callback=initMap&libraries=places,visualization";
 
   $.ajax({
