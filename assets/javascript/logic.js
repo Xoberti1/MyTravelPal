@@ -28,11 +28,20 @@ $(document).ready(function() {
   var events = $("#events");
   var attractions = $("#attractions");
   var restaurants = $("#restaurants");
+  var results = $("#results");
+  var dateFormat = "";
+  var foursquareClientID = "H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM";
+  var foursquareClientSecret = "1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C";
   var eventfulAPI = "app_key=Qm9xNFv7PP2fqZVZ";
   var eventfulURL = "http://api.eventful.com/json/events/search?"
   //var queryURL = "http://api.eventful.com/rest/events/search?" + "app_key=Qm9xNFv7PP2fqZVZ&" + "Houston" + "&" + "books";
-  var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=" + userlocation + "&app_key=Qm9xNFv7PP2fqZVZ";
+  var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=" + locationVal + "&date=" + dateFormat + "&app_key=Qm9xNFv7PP2fqZVZ";
+  var locationVal = "";
+  var calendarVal = "";
+  var restaurantsVal = "";
   console.log(eventfulQuery);
+  console.log(locationVal);
+  console.log(calendarVal);
 
     $.ajax({
       url: eventfulQuery,
@@ -112,6 +121,16 @@ $(document).ready(function() {
       // $("#signin-page").show();
       // $("#game-page").hide();
     };
+  });
+
+  submit.on("click", function() {
+    locationVal = userlocation.val();
+    calendarVal = calendar.val();
+    console.log(locationVal);
+    console.log(calendarVal);
+    dateFormat = moment(calendarVal).format('YYYY MM DD');
+    console.log(dateFormat);
+    //window.location.href = "eventselector.html";
   });
 
   //Location Selector Page
