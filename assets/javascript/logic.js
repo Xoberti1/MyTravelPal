@@ -28,11 +28,20 @@ $(document).ready(function() {
   var events = $("#events");
   var attractions = $("#attractions");
   var restaurants = $("#restaurants");
+  var results = $("#results");
+  var dateFormat = "";
+  var foursquareClientID = "H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM";
+  var foursquareClientSecret = "1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C";
   var eventfulAPI = "app_key=Qm9xNFv7PP2fqZVZ";
   var eventfulURL = "http://api.eventful.com/json/events/search?"
   //var queryURL = "http://api.eventful.com/rest/events/search?" + "app_key=Qm9xNFv7PP2fqZVZ&" + "Houston" + "&" + "books";
-  var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=" + userlocation + "&app_key=Qm9xNFv7PP2fqZVZ";
+  var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=" + locationVal + "&date=" + dateFormat + "&app_key=Qm9xNFv7PP2fqZVZ";
+  var locationVal = "";
+  var calendarVal = "";
+  var restaurantsVal = "";
   console.log(eventfulQuery);
+  console.log(locationVal);
+  console.log(calendarVal);
 
     $.ajax({
       url: eventfulQuery,
@@ -114,6 +123,16 @@ $(document).ready(function() {
     };
   });
 
+  submit.on("click", function() {
+    locationVal = userlocation.val();
+    calendarVal = calendar.val();
+    console.log(locationVal);
+    console.log(calendarVal);
+    dateFormat = moment(calendarVal).format('YYYY MM DD');
+    console.log(dateFormat);
+    //window.location.href = "eventselector.html";
+  });
+
   //Location Selector Page
   var googleQuery = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCmuGjtB5AKU9b4DFOD3c6m7g2I4jlTP_4&callback=initMap&libraries=places,visualization";
 
@@ -137,15 +156,7 @@ $(document).ready(function() {
     });
   });
 
-  submit.on("click", function() {
-    var locationVal = userlocation.val();
-    var calendarVal = calendar.val();
-    console.log(locationVal);
-    console.log(calendarVal);
-    //window.location.href = "eventselector.html";
-  });
-
-  var foursquareQuery = "https://api.foursquare.com/v2/venues/search?client_id=CLIENT_ID&client_secret=CLIENT_SECRET&v=20130815 &ll=40.7,-74 &query=pizza"
+  var foursquareQuery = "https://api.foursquare.com/v2/venues/search?client_id=H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM&client_secret=1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C&v=20130815 &ll=40.7,-74 &query=" + restaurantsVal;
 
   $.ajax({
     url: foursquareQuery,
