@@ -138,10 +138,9 @@ $(document).ready(function() {
 
   $.ajax({
     url: googleQuery,
-    method: "GET",
-    dataType: 'jsonp'
+    method: "GET"
   }).done(function(response) {
-      console.log(response);
+    console.log(response);
   });
 
 
@@ -156,13 +155,11 @@ $(document).ready(function() {
     });
   });
 
-  var foursquareQuery = "https://api.foursquare.com/v2/venues/search?client_id=H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM&client_secret=1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C&v=20130815 &ll=40.7,-74 &query=" + restaurantsVal;
-
-  $.ajax({
-    url: foursquareQuery,
-    method: "GET",
-    dataType: 'jsonp'
-  }).done(function(response) {
-      console.log(response);
+  submit.on("click", function() {
+    var locationVal = userlocation.val();
+    var calendarVal = calendar.val();
+    console.log(locationVal);
+    console.log(calendarVal);
+    //window.location.href = "eventselector.html";
   });
 });
