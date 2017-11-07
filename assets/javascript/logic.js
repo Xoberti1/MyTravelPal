@@ -20,10 +20,11 @@ $(document).ready(function() {
   var signup = $("#signup");
   var logout = $("#logout");
   var submit = $("#submit");
+  var submit2 = $("#submit2");
   var signupsub = $("#signupsubmit");
   var loginsub = $("#loginsubmit");
   var userlocation = $("#userlocation");
-  var calendar = $("#calendar");
+  var calendar = $("#datepicker");
   var events = $("#events");
   var attractions = $("#attractions");
   var restaurants = $("#restaurants");
@@ -33,15 +34,13 @@ $(document).ready(function() {
   var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=" + userlocation + "&app_key=Qm9xNFv7PP2fqZVZ";
   console.log(eventfulQuery);
 
-  $("#submit").on("click", function(event) {
-    event.preventDefault();
     $.ajax({
       url: eventfulQuery,
-      method: "GET"
+      method: "GET",
+      dataType: 'jsonp'
     }).done(function(response) {
       console.log(response);
     });
-  });
 
   logout.hide();
 
@@ -116,21 +115,21 @@ $(document).ready(function() {
   });
 
   //Location Selector Page
-
   var googleQuery = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCmuGjtB5AKU9b4DFOD3c6m7g2I4jlTP_4&callback=initMap&libraries=places,visualization";
 
   $.ajax({
-          url: googleQuery,
-          method: "GET"
-        }).done(function(response) {
-            console.log(response);
-        });
+    url: googleQuery,
+    method: "GET",
+    dataType: 'jsonp'
+  }).done(function(response) {
+      console.log(response);
+  });
 
 
 
   //create calendar
   $(function() {
-    $("#datepicker").datepicker({
+    calendar.datepicker({
       inline: true,
       firstDay: 1,
       showOtherMonths: true,
@@ -143,6 +142,16 @@ $(document).ready(function() {
     var calendarVal = calendar.val();
     console.log(locationVal);
     console.log(calendarVal);
-    window.location.href = "eventselector.html";
+    //window.location.href = "eventselector.html";
+  });
+
+  var foursquareQuery = "https://api.foursquare.com/v2/venues/search?client_id=CLIENT_ID&client_secret=CLIENT_SECRET&v=20130815 &ll=40.7,-74 &query=pizza"
+
+  $.ajax({
+    url: foursquareQuery,
+    method: "GET",
+    dataType: 'jsonp'
+  }).done(function(response) {
+      console.log(response);
   });
 });
