@@ -11,10 +11,13 @@ $(document).ready(function(){
 
 	firebase.initializeApp(config);
 
-	 var database = firebase.database();
-	 var auth = firebase.auth();
-	 var user = firebase.auth().currentUser;
-	 var email = $("#email");
+    var map;
+    var infoWindow;
+    var service;
+    var database = firebase.database();
+    var auth = firebase.auth();
+    var user = firebase.auth().currentUser;
+    var email = $("#email");
   	var password = $("#password");
   	var login = $("#login");
   	var signup = $("#signup");
@@ -23,25 +26,35 @@ $(document).ready(function(){
   	var loginsub = $("#loginsubmit");
   	var userlocation = $("#userlocation");
   	var calendar = $("#calendar");
+    var submit = $("#submit");
   	var events = $("#events");
   	var attractions = $("#attractions");
   	var restaurants = $("#restaurants");
   	var eventfulAPI = "app_key=Qm9xNFv7PP2fqZVZ";
-  	var eventfulURL = "https://api.eventful.com/json/events/search?"
+  	var eventfulURL = "https://api.eventful.com/json/events/search?";
+    var googleAPI = "AIzaSyCmuGjtB5AKU9b4DFOD3c6m7g2I4jlTP_4";
+    var googleURL = "https://maps.googleapis.com/maps/api/js?key=";
 	 //var queryURL = "http://api.eventful.com/rest/events/search?" + "app_key=Qm9xNFv7PP2fqZVZ&" + "Houston" + "&" + "books";
 		var eventfulQuery = "https://api.eventful.com/json/events/search?keywords=music&location=Singapore&app_key=Qm9xNFv7PP2fqZVZ";
+    var googleQuery = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCmuGjtB5AKU9b4DFOD3c6m7g2I4jlTP_4&callback=initMap&libraries=places,visualization";
     console.log(eventfulQuery);
+    console.log(googleQuery);
 
-
-    $("#submit").on("click", function(event){
-      event.preventDefault();
     	$.ajax({
         url: eventfulQuery,
-        method: "GET"
+        method: "GET",
+        dataType: 'jsonp'
       }).done(function(response) {
           console.log(response);
       });
-    });
+
+      $.ajax({
+        url: googleQuery,
+        method: "GET",
+        dataType: 'jsonp'
+      }).done(function(response) {
+          console.log(response);
+      });
 
     logout.hide();
 
@@ -87,7 +100,6 @@ $(document).ready(function(){
     .catch(function(error){
       console.log('sign-in error', error)
     })
-    //window.location.href="locationselector.html";
   });
 
   //logout event
@@ -105,15 +117,20 @@ $(document).ready(function(){
       console.log(email);
       console.log(uid);
       logout.show();
-      //window.location.href="locationselector.html";
-
     }
     else{
       console.log("not a user");
-       logout.hide();
-      // login.show();
-      // $("#signin-page").show();
-      // $("#game-page").hide();
+      logout.hide();
     };
+  });
+
+  submit.on("click", function(){
+    var locationVal = userlocation.val();
+    var calendarVal = calendar.val();
+
+    console.log(locationVal);
+    console.log(calendarVal);
+
+    window.location.href="eventselector.html";
   });
 });

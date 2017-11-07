@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
@@ -10,8 +7,9 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="assets/css/glDatePicker-2.0/styles/glDatePicker.default.css" rel="stylesheet" type="text/css">
 
+    <link rel="stylesheet" href="assets/css/style.css">
 
   </head>
 
@@ -23,42 +21,41 @@
 
   	<div class="panel panel-default">
 
-        <div class="panel-body circle-div" id="location-page">
+      <div class="panel-body circle-div" id="location-page">
 
+        <form>
 
-        	 <form>
-
-        	 	<h3>Where are you off to?</h3>
+        	<h3>Where are you off to?</h3>
                
-                <div class="form-group">
-                  <label for="location">Location</label>
-                  <input type="text" class="form-control" id="location">
-                </div>
+            <div class="form-group">
+              <label for="userlocation">Location</label>
+              <input type="text" class="form-control" id="userlocation">
+            </div>
 
-                <div class="form-group">Calendar</label>
-                    <input type="dropdown" class="form-control" id="location">
-                </div>
+            <div class="form-group">
+              <label for="calendar">Calendar</label>
+              <input type="text" class="form-control" id="calendar">
+            </div>
 
-            </form>
+        </form>
 
-        </div> 
+      </div>    
 
-        <div type="submit" class="btn-default">
-        	<button id="logout">Logout</button>
-        	<button id="submit">Submit</button>
-    	</div>
+    </div> 
 
+    <div type="submit" class="btn-default">
+    	<button id="logout">Logout</button>
+    	<button id="submit">Submit</button>
+    </div>
 
+    <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
 
- <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/css/glDatePicker-2.0/glDatePicker.min.js"></script>
 
-<script type="text/javascript" src="assets/javascript/logic.js"></script>    
-
+    <script type="text/javascript" src="assets/javascript/logic.js"></script>    
 
   </body>
 </html>
-
-
 
