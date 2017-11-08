@@ -117,9 +117,7 @@ $(document).ready(function() {
     } else {
       console.log("not a user");
       logout.hide();
-      // login.show();
-      // $("#signin-page").show();
-      // $("#game-page").hide();
+      window.location.href="homepage.html";
     };
   });
 
