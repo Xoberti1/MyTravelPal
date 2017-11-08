@@ -7,7 +7,7 @@ $(document).ready(function() {
     projectId: "mytravelpal-ebf41",
     storageBucket: "mytravelpal-ebf41.appspot.com",
     messagingSenderId: "287994305952"
-  };
+  }; 
 
   firebase.initializeApp(config);
 
@@ -35,22 +35,13 @@ $(document).ready(function() {
   var eventfulAPI = "app_key=Qm9xNFv7PP2fqZVZ";
   var eventfulURL = "http://api.eventful.com/json/events/search?"
   //var queryURL = "http://api.eventful.com/rest/events/search?" + "app_key=Qm9xNFv7PP2fqZVZ&" + "Houston" + "&" + "books";
-  var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=" + locationVal + "&date=" + dateFormat + "&app_key=Qm9xNFv7PP2fqZVZ";
+  //var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=" + locationVal + "&date=" + dateFormat + "&app_key=Qm9xNFv7PP2fqZVZ";
   var locationVal = "";
   var calendarVal = "";
   var restaurantsVal = "";
   var eventVal = "";
-  console.log(eventfulQuery);
   console.log(locationVal);
   console.log(calendarVal);
-
-    $.ajax({
-      url: eventfulQuery,
-      method: "GET",
-      dataType: 'jsonp'
-    }).done(function(response) {
-      console.log(response);
-    });
 
   logout.hide();
 
@@ -77,8 +68,8 @@ $(document).ready(function() {
     console.log("signup ran");
     //get email and password
     event.preventDefault();
-    var emailval = email.val();
-    var pass = password.val();
+    var emailval = email.val().trim();
+    var pass = password.val().trim();
     var auth = firebase.auth();
     console.log(emailval);
     console.log(pass);
@@ -106,7 +97,6 @@ $(document).ready(function() {
       console.log(uid);
       logout.show();
     } 
-
     else {
       console.log("not a user");
       logout.hide();
@@ -114,25 +104,44 @@ $(document).ready(function() {
   });
 
   submit.on("click", function() {
-    locationVal = userlocation.val();
-    calendarVal = calendar.val();
-    console.log(locationVal);
-    console.log(calendarVal);
+    locationVal = userlocation.val().trim();
+    calendarVal = calendar.val().trim();
+    console.log(locationVal, "locationVal ran");
+    console.log(calendarVal, "calendarVal ran");
     dateFormat = moment(calendarVal).format('YYYY MM DD');
     console.log(dateFormat);
-    //window.location.href = "eventselector.html";
+    window.location.href = "eventselector.html";
   });
 
-  // var eventSelected = $("#dropdown-content option:selected").on("click", function(){
-  //     if($(this).is(":selected")){
-  //     var val = $(this).val();
-  //     console.log(val, "val ran")  
-  //   };
-  // });
-
   submit2.on("click", function() {
-    var eventSelected = $("#dropdown-content").val();
-    console.log(eventSelected, "eventSelected ran")
+    eventVal = $("#dropdown-content").val().trim();
+    console.log(eventVal, "eventSelected ran")
+    restaurantsVal = restaurants.val().trim();
+    console.log(restaurantsVal, "restaurantsVal ran");
+
+    var foursquareQuery = "https://api.foursquare.com/v2/venues/search?client_id=H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM&client_secret=1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C&v=20130815 &ll=40.7,-74 &query=" + restaurantsVal;
+    var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=" + locationVal + "&date=" + dateFormat + "&app_key=Qm9xNFv7PP2fqZVZ";
+    console.log(foursquareQuery);
+    console.log(eventfulQuery);
+    console.log(dateFormat);
+    console.log(locationVal);
+    
+    $.ajax({
+      url: eventfulQuery,
+      method: "GET",
+      dataType: 'jsonp'
+    }).done(function(response) {
+      console.log(response);
+    });
+
+    $.ajax({
+      url: foursquareQuery,
+      method: "GET",
+      dataType: 'jsonp'
+    }).done(function(response) {
+        console.log(response);
+    });
+
   });
   //Location Selector Page
   var googleQuery = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCmuGjtB5AKU9b4DFOD3c6m7g2I4jlTP_4&callback=initMap&libraries=places,visualization";
@@ -155,13 +164,4 @@ $(document).ready(function() {
     });
   });
 
-  var foursquareQuery = "https://api.foursquare.com/v2/venues/search?client_id=H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM&client_secret=1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C&v=20130815 &ll=40.7,-74 &query=" + restaurantsVal;
-
-  $.ajax({
-    url: foursquareQuery,
-    method: "GET",
-    dataType: 'jsonp'
-  }).done(function(response) {
-      console.log(response);
-  });
 });
