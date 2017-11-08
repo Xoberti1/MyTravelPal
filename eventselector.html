@@ -11,6 +11,12 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
 
+    <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="assets/javascript/logic.js"></script>
+
   </head>
 
   <body>
@@ -21,11 +27,20 @@
 
     <div class="panel panel-default">
 
-    	<panel id="events">EVENTS</panel>
+    	<panel class="dropdown" id="events">
+    		<button class="dropbtn">EVENTS</button>
 
-    	<panel id="attractions">ATTRACTIONS</panel>
+    		<div class="dropdown-content">
+    			<a id="concerts" value="concerts" href="#concerts">Concerts</a>
+			    <a id="comedy" value="comedy" href="#comedy">Comedy</a>
+			    <a id="nightlife" value="nightlife" href="#nightlife">Nightlife</a>
+			    <a id="performingArts" value="performingArts" href="#performingArts">Performing Arts</a>
+			    <a id="sports" value="sports" href="#sports">Sports</a>
+    		</div>
 
-    	<panel id="restaurants">RESTAURANTS</panel>
+    	</panel>
+
+    	<input id="restaurants">TYPE OF FOOD</input>
 
     	
 
