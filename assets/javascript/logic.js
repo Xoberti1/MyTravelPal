@@ -39,6 +39,7 @@ $(document).ready(function() {
   var locationVal = "";
   var calendarVal = "";
   var restaurantsVal = "";
+  var eventVal = "";
   console.log(eventfulQuery);
   console.log(locationVal);
   console.log(calendarVal);
@@ -60,12 +61,8 @@ $(document).ready(function() {
     var emailval = email.val();
     var pass = password.val();
     var auth = firebase.auth();
-    //var displayname = username.val();
-
     console.log(emailval);
     console.log(pass)
-    //console.log(displayname)
-    //Sign-in
     auth.signInWithEmailAndPassword(emailval, pass).then(function() {
         window.location.href = "locationselector.html";
       })
@@ -77,30 +74,26 @@ $(document).ready(function() {
 
   //sign-up event
   signup.on('click', function(event) {
-    console.log("logout ran");
+    console.log("signup ran");
     //get email and password
     event.preventDefault();
     var emailval = email.val();
     var pass = password.val();
     var auth = firebase.auth();
-    //var displayname = username.val();
-
     console.log(emailval);
     console.log(pass);
-    //console.log(displayname);
-    //Sign-in
     auth.createUserWithEmailAndPassword(emailval, pass).then(function() {
         window.location.href = "locationselector.html";
       })
       .catch(function(error) {
         console.log('sign-in error', error)
       })
-    //window.location.href="locationselector.html";
   });
 
   //logout event
   logout.on('click', function() {
     firebase.auth().signOut();
+    window.location.href="homepage.html";
   });
 
   //make sure the user is a user
@@ -112,14 +105,11 @@ $(document).ready(function() {
       console.log(email);
       console.log(uid);
       logout.show();
-      //window.location.href="locationselector.html";
+    } 
 
-    } else {
+    else {
       console.log("not a user");
       logout.hide();
-      // login.show();
-      // $("#signin-page").show();
-      // $("#game-page").hide();
     };
   });
 
@@ -133,17 +123,27 @@ $(document).ready(function() {
     //window.location.href = "eventselector.html";
   });
 
+  // var eventSelected = $("#dropdown-content option:selected").on("click", function(){
+  //     if($(this).is(":selected")){
+  //     var val = $(this).val();
+  //     console.log(val, "val ran")  
+  //   };
+  // });
+
+  submit2.on("click", function() {
+    var eventSelected = $("#dropdown-content").val();
+    console.log(eventSelected, "eventSelected ran")
+  });
   //Location Selector Page
   var googleQuery = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCmuGjtB5AKU9b4DFOD3c6m7g2I4jlTP_4&callback=initMap&libraries=places,visualization";
 
   $.ajax({
     url: googleQuery,
-    method: "GET"
+    method: "GET",
+    dataType: 'jsonp'
   }).done(function(response) {
-    console.log(response);
+      console.log(response);
   });
-
-
 
   //create calendar
   $(function() {
@@ -155,11 +155,13 @@ $(document).ready(function() {
     });
   });
 
-  submit.on("click", function() {
-    var locationVal = userlocation.val();
-    var calendarVal = calendar.val();
-    console.log(locationVal);
-    console.log(calendarVal);
-    //window.location.href = "eventselector.html";
+  var foursquareQuery = "https://api.foursquare.com/v2/venues/search?client_id=H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM&client_secret=1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C&v=20130815 &ll=40.7,-74 &query=" + restaurantsVal;
+
+  $.ajax({
+    url: foursquareQuery,
+    method: "GET",
+    dataType: 'jsonp'
+  }).done(function(response) {
+      console.log(response);
   });
 });
