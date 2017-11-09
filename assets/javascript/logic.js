@@ -7,7 +7,7 @@ $(document).ready(function() {
     projectId: "mytravelpal-ebf41",
     storageBucket: "mytravelpal-ebf41.appspot.com",
     messagingSenderId: "287994305952"
-  };
+  }; 
 
   firebase.initializeApp(config);
 
@@ -35,21 +35,13 @@ $(document).ready(function() {
   var eventfulAPI = "app_key=Qm9xNFv7PP2fqZVZ";
   var eventfulURL = "http://api.eventful.com/json/events/search?"
   //var queryURL = "http://api.eventful.com/rest/events/search?" + "app_key=Qm9xNFv7PP2fqZVZ&" + "Houston" + "&" + "books";
-  var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=" + locationVal + "&date=" + dateFormat + "&app_key=Qm9xNFv7PP2fqZVZ";
+  //var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=" + locationVal + "&date=" + dateFormat + "&app_key=Qm9xNFv7PP2fqZVZ";
   var locationVal = "";
   var calendarVal = "";
   var restaurantsVal = "";
-  console.log(eventfulQuery);
+  var eventVal = "";
   console.log(locationVal);
   console.log(calendarVal);
-
-    $.ajax({
-      url: eventfulQuery,
-      method: "GET",
-      dataType: 'jsonp'
-    }).done(function(response) {
-      console.log(response);
-    });
 
   logout.hide();
 
@@ -60,12 +52,8 @@ $(document).ready(function() {
     var emailval = email.val();
     var pass = password.val();
     var auth = firebase.auth();
-    //var displayname = username.val();
-
     console.log(emailval);
     console.log(pass)
-    //console.log(displayname)
-    //Sign-in
     auth.signInWithEmailAndPassword(emailval, pass).then(function() {
         window.location.href = "locationselector.html";
       })
@@ -77,30 +65,26 @@ $(document).ready(function() {
 
   //sign-up event
   signup.on('click', function(event) {
-    console.log("logout ran");
+    console.log("signup ran");
     //get email and password
     event.preventDefault();
-    var emailval = email.val();
-    var pass = password.val();
+    var emailval = email.val().trim();
+    var pass = password.val().trim();
     var auth = firebase.auth();
-    //var displayname = username.val();
-
     console.log(emailval);
     console.log(pass);
-    //console.log(displayname);
-    //Sign-in
     auth.createUserWithEmailAndPassword(emailval, pass).then(function() {
         window.location.href = "locationselector.html";
       })
       .catch(function(error) {
         console.log('sign-in error', error)
       })
-    //window.location.href="locationselector.html";
   });
 
   //logout event
   logout.on('click', function() {
     firebase.auth().signOut();
+    window.location.href="homepage.html";
   });
 
   //make sure the user is a user
@@ -112,36 +96,67 @@ $(document).ready(function() {
       console.log(email);
       console.log(uid);
       logout.show();
-      //window.location.href="locationselector.html";
-
-    } else {
+    } 
+    else {
       console.log("not a user");
       logout.hide();
+<<<<<<< HEAD
       //window.location.href="homepage.html";
+=======
+>>>>>>> a9418dd959f6c4d4174f3c596c5252ca8e1becce
     };
   });
 
   submit.on("click", function() {
-    locationVal = userlocation.val();
-    calendarVal = calendar.val();
-    console.log(locationVal);
-    console.log(calendarVal);
+    locationVal = userlocation.val().trim();
+    calendarVal = calendar.val().trim();
+    console.log(locationVal, "locationVal ran");
+    console.log(calendarVal, "calendarVal ran");
     dateFormat = moment(calendarVal).format('YYYY MM DD');
     console.log(dateFormat);
     window.location.href = "eventselector.html";
   });
 
+  submit2.on("click", function() {
+    eventVal = $("#dropdown-content").val().trim();
+    console.log(eventVal, "eventSelected ran")
+    restaurantsVal = restaurants.val().trim();
+    console.log(restaurantsVal, "restaurantsVal ran");
+
+    var foursquareQuery = "https://api.foursquare.com/v2/venues/search?client_id=H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM&client_secret=1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C&v=20130815 &ll=40.7,-74 &query=" + restaurantsVal;
+    var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=" + locationVal + "&date=" + dateFormat + "&app_key=Qm9xNFv7PP2fqZVZ";
+    console.log(foursquareQuery);
+    console.log(eventfulQuery);
+    console.log(dateFormat);
+    console.log(locationVal);
+    
+    $.ajax({
+      url: eventfulQuery,
+      method: "GET",
+      dataType: 'jsonp'
+    }).done(function(response) {
+      console.log(response);
+    });
+
+    $.ajax({
+      url: foursquareQuery,
+      method: "GET",
+      dataType: 'jsonp'
+    }).done(function(response) {
+        console.log(response);
+    });
+
+  });
   //Location Selector Page
   var googleQuery = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCmuGjtB5AKU9b4DFOD3c6m7g2I4jlTP_4&callback=initMap&libraries=places,visualization";
 
   $.ajax({
     url: googleQuery,
-    method: "GET"
+    method: "GET",
+    dataType: 'jsonp'
   }).done(function(response) {
-    console.log(response);
+      console.log(response);
   });
-
-
 
   //create calendar
   $(function() {
@@ -153,11 +168,4 @@ $(document).ready(function() {
     });
   });
 
-  submit.on("click", function() {
-    var locationVal = userlocation.val();
-    var calendarVal = calendar.val();
-    console.log(locationVal);
-    console.log(calendarVal);
-    //window.location.href = "eventselector.html";
-  });
 });
