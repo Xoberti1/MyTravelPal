@@ -117,7 +117,7 @@ $(document).ready(function() {
     } else {
       console.log("not a user");
       logout.hide();
-      window.location.href="homepage.html";
+      //window.location.href="homepage.html";
     };
   });
 
@@ -128,7 +128,7 @@ $(document).ready(function() {
     console.log(calendarVal);
     dateFormat = moment(calendarVal).format('YYYY MM DD');
     console.log(dateFormat);
-    //window.location.href = "eventselector.html";
+    window.location.href = "eventselector.html";
   });
 
   //Location Selector Page
