@@ -5,6 +5,8 @@
   <title>Place ID Finder</title>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmuGjtB5AKU9b4DFOD3c6m7g2I4jlTP_4&libraries=places&callback=initMap"
+      async defer></script>
   <style>
     /* Always set the map height explicitly to define the size of the div
      * element that contains the map. */
@@ -53,12 +55,12 @@
   <body>
 
     <!--pac in put is results location name -->
-    <input id="pac-input" class="controls" type="text"
+    <input id="userSearch" class="controls" type="text"
         placeholder="Enter a location">
     <div id="map"></div>
     <div id="infowindow-content">
       <span id="place-name"  class="title"></span><br>
-      Place ID <span id="place-id"></span><br>
+
       <span id="place-address"></span>
     </div>
     <script>
@@ -77,7 +79,7 @@
           zoom: 13
         });
 
-        var input = document.getElementById('pac-input');
+        var input = document.getElementById('userSearch');
 
         var autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.bindTo('bounds', map);
@@ -116,15 +118,14 @@
           marker.setVisible(true);
 
           infowindowContent.children['place-name'].textContent = place.name;
-          infowindowContent.children['place-id'].textContent = place.place_id;
+          //infowindowContent.children['place-id'].textContent = place.place_id;
           infowindowContent.children['place-address'].textContent =
               place.formatted_address;
           infowindow.open(map, marker);
         });
       }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmuGjtB5AKU9b4DFOD3c6m7g2I4jlTP_4&libraries=places&callback=initMap"
-        async defer></script>
+
   </body>
 
   </body>
