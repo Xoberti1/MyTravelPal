@@ -143,6 +143,7 @@ $(document).ready(function() {
     });
 
   });
+
   //Location Selector Page
   var googleQuery = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCmuGjtB5AKU9b4DFOD3c6m7g2I4jlTP_4&callback=initMap&libraries=places,visualization";
 
