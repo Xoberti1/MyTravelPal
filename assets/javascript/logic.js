@@ -1,22 +1,21 @@
-//Google Maps for results input
-var map;
+var googleMap;
+
 
 function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {
-      lat: -34.397,
-      lng: 150.644
-    },
-    zoom: 8
+  var uluru = {lat: -25.363, lng: 131.044};
+  var googleMap = new google.maps.Map(document.getElementById('map'), {
+    zoom: 4,
+    center: uluru
   });
 
-  $("#map").empty();
+  var marker = new google.maps.Marker({
+    position: uluru,
+    map: map
+  });
 
-  for (var i = 0; i < response.venues.length; i++) {
-    var mapLocations = response.venues[i];
-    var mapAddresses = mapLocations.location.formattedAddress;
-    console.log(mapAddresses, "this works");
-  }
+}
+
+$(document).ready(function() {
 
 }
 
@@ -51,6 +50,7 @@ $(document).ready(function() {
   var eventSelector = $("#eventSelector");
   var locationSelector = $("#locationSelector")
   var dateFormat = "";
+  var content = "";
   var foursquareClientID = "H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM";
   var foursquareClientSecret = "1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C";
   var eventfulAPI = "app_key=Qm9xNFv7PP2fqZVZ";
@@ -131,7 +131,6 @@ $(document).ready(function() {
   });
   submit2.on("click", function() {
     eventVal = $("#dropdown-content").val().trim();
-    console.log(eventVal, "eventSelected ran")
     restaurantsVal = restaurants.val().trim();
     console.log(restaurantsVal, "restaurantsVal ran");
     var foursquareQuery = "https://api.foursquare.com/v2/venues/search?client_id=H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM&client_secret=1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C&categoryId=4d4b7105d754a06374d81259&near=" + locationVal + "&v=20130815 &ll=40.7,-74 &query=" + restaurantsVal;
@@ -142,14 +141,44 @@ $(document).ready(function() {
     console.log(locationVal);
 
     $.ajax({
-      url: eventfulQuery,
+      url: foursquareQuery,
       method: "GET",
       dataType: 'jsonp'
-    }).done(function(response) {
-      console.log(response);
+    }).done(function(foursquareRes) {
+      console.log(foursquareRes);
+      googleMap = new google.maps.Map(document.getElementById('map'), {
+          zoom: 11,
+          center: foursquareRes.response.geocode.feature.geometry.center
+        });
+        $.each(foursquareRes.response.venues, function(key, value){
+          // do stuff here
+          content = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h3 id="firstHeading" class="firstHeading">' + value.name + '</h3>' +
+            '<div id="bodyContent">' + value.contact.formattedPhone + '</div>' + '<div id=contact>' + value.location.formattedAddress + '</div>';
+
+          var infowindow = new google.maps.InfoWindow({
+            content: content
+          });
+          var marker = new google.maps.Marker({
+            position: {lat:value.location.lat, lng:value.location.lng},
+            map: googleMap,
+            title: value.name
+          });
+
+          marker.addListener('click', function() {
+            infowindow.open(googleMap, marker);
+          });
+
+          $("#details").append(content);
+
+      });
+      //Show you map
+
     });
     $.ajax({
-      url: foursquareQuery,
+      url: eventfulQuery,
       method: "GET",
       dataType: 'jsonp'
     }).done(function(response) {
