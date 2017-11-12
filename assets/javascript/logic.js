@@ -1,3 +1,25 @@
+//Google Maps for results input
+var map;
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {
+      lat: -34.397,
+      lng: 150.644
+    },
+    zoom: 8
+  });
+
+  $("#map").empty();
+
+  for (var i = 0; i < response.venues.length; i++) {
+    var mapLocations = response.venues[i];
+    var mapAddresses = mapLocations.location.formattedAddress;
+    console.log(mapAddresses, "this works");
+  }
+
+}
+
 $(document).ready(function() {
   var config = {
     apiKey: "AIzaSyAH08gCmyuhWsZ-2HLKIatrYzH3iRYbnyc",
@@ -26,6 +48,8 @@ $(document).ready(function() {
   var attractions = $("#attractions");
   var restaurants = $("#restaurants");
   var results = $("#results");
+  var eventSelector = $("#eventSelector");
+  var locationSelector = $("#locationSelector")
   var dateFormat = "";
   var foursquareClientID = "H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM";
   var foursquareClientSecret = "1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C";
@@ -40,6 +64,7 @@ $(document).ready(function() {
   console.log(locationVal);
   console.log(calendarVal);
   logout.hide();
+  eventSelector.hide();
   login.on('click', function(event) {
     console.log("login ran");
     //get email and password
@@ -61,8 +86,8 @@ $(document).ready(function() {
     console.log("signup ran");
     //get email and password
     event.preventDefault();
-    var emailval = email.val();
-    var pass = password.val();
+    var emailval = email.val().trim();
+    var pass = password.val().trim();
     var auth = firebase.auth();
     console.log(emailval);
     console.log(pass);
@@ -76,7 +101,7 @@ $(document).ready(function() {
   //logout event
   logout.on('click', function() {
     firebase.auth().signOut();
-    window.location.href="homepage.html";
+    window.location.href = "homepage.html";
   });
   //make sure the user is a user
   firebase.auth().onAuthStateChanged(function(user) {
@@ -87,27 +112,29 @@ $(document).ready(function() {
       console.log(email);
       console.log(uid);
       logout.show();
-    }
-    else {
+    } else {
       console.log("not a user");
       logout.hide();
     };
   });
-  submit.on("click", function() {
+  submit.on("click", function(event) {
+    event.preventDefault();
     locationVal = userlocation.val().trim();
     calendarVal = calendar.val().trim();
     console.log(locationVal, "locationVal ran");
     console.log(calendarVal, "calendarVal ran");
-    dateFormat = moment(calendarVal).format('YYYY MM DD');
+    dateFormat = moment(calendarVal).format('YYYYMMDD');
     console.log(dateFormat);
-    window.location.href = "eventselector.html";
+    //window.location.href = "eventselector.html";
+    eventSelector.show();
+    locationSelector.hide();
   });
   submit2.on("click", function() {
-    eventVal = $("#dropdown-content").val();
+    eventVal = $("#dropdown-content").val().trim();
     console.log(eventVal, "eventSelected ran")
     restaurantsVal = restaurants.val().trim();
     console.log(restaurantsVal, "restaurantsVal ran");
-    var foursquareQuery = "https://api.foursquare.com/v2/venues/search?client_id=H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM&client_secret=1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C&v=20130815 &ll=40.7,-74 &query=" + restaurantsVal;
+    var foursquareQuery = "https://api.foursquare.com/v2/venues/search?client_id=H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM&client_secret=1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C&categoryId=4d4b7105d754a06374d81259&near=" + locationVal + "&v=20130815 &ll=40.7,-74 &query=" + restaurantsVal;
     var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=" + locationVal + "&date=" + dateFormat + "&app_key=Qm9xNFv7PP2fqZVZ";
     console.log(foursquareQuery);
     console.log(eventfulQuery);
@@ -126,18 +153,18 @@ $(document).ready(function() {
       method: "GET",
       dataType: 'jsonp'
     }).done(function(response) {
-        console.log(response);
+      console.log(response);
     });
   });
-  //Location Selector Page
-  var googleQuery = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCmuGjtB5AKU9b4DFOD3c6m7g2I4jlTP_4&callback=initMap&libraries=places,visualization";
-  $.ajax({
-    url: googleQuery,
-    method: "GET",
-    dataType: 'jsonp'
-  }).done(function(response) {
-      console.log(response);
-  });
+  // Location Selector Page
+  // var googleQuery = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCmuGjtB5AKU9b4DFOD3c6m7g2I4jlTP_4&callback=initMap&libraries=places,visualization";
+  // $.ajax({
+  //   url: googleQuery,
+  //   method: "GET",
+  //   dataType: 'jsonp'
+  // }).done(function(response) {
+  //   console.log(response);
+  //});
   //create calendar
   $(function() {
     calendar.datepicker({

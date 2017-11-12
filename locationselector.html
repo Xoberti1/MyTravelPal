@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -16,6 +17,8 @@
     <h1>My TravelPal</h1>
   </div>
 <body>
+<!-- Html for Location Selector page -->
+<section id="locationSelector">
   <div class="panel panel-default">
     <div class="panel-body circle-div" id="location-page">
       <form>
@@ -29,10 +32,43 @@
               </div>
       </form>
     </div>
-
   </div>
     <div type="submit" class="btn-default">
       <button id="logout">Logout</button>
       <button id="submit">Submit</button>
     </div>
+</section>
+<!-- Html for Event Selector page -->
+<section id="eventSelector">
+  <div class="panel panel-default">
+    <div class="panel-body circle-div" id="event-page">
+      <form>
+          <panel id="events">
+            <div class="form-group">
+              <label for="events">EVENTS</label>
+              <select id="dropdown-content">
+                  <option id="concerts" value="concerts" href="#concerts" class="eventopt">Concerts</option>
+                  <option id="comedy" value="comedy" href="#comedy" class="eventopt">Comedy</option>
+                  <option id="nightlife" value="nightlife" href="#nightlife" class="eventopt">Nightlife</option>
+                  <option id="performingArts" value="performingArts" href="#performingArts" class="eventopt">Performing Arts</option>
+                  <option id="sports" value="sports" href="#sports" class="eventopt">Sports</option>
+              </select>
+            </div>
+          </panel>
+          <panel id="restaurantPanel">
+            <div class="form-group">
+              <label for="restaurants">TYPE OF FOOD</label>
+              <input type="text" class="form-control" id="restaurants"></input>
+            </div>
+          </panel>
+      </form>
+    </div>
+
+  </div>
+    <div type="submit" class="btn-default">
+      <button id="logout">Logout</button>
+      <button id="submit2">Submit</button>
+    </div>
+</section>
+</body>
 </html>
