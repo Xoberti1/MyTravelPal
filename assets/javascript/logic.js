@@ -1,3 +1,42 @@
+var googleMap;
+
+
+function initMap() {
+  var uluru = {lat: -25.363, lng: 131.044};
+  var googleMap = new google.maps.Map(document.getElementById('map'), {
+    zoom: 4,
+    center: uluru
+  });
+
+  var marker = new google.maps.Marker({
+    position: uluru,  
+    map: map
+  });
+
+}  
+
+  var email = $("#email");
+  var password = $("#password");
+  var login = $("#login");
+  var signup = $("#signup");
+  var logout = $("#logout");
+  var submit = $("#submit");
+  var submit2 = $("#submit2");
+  var signupsub = $("#signupsubmit");
+  var loginsub = $("#loginsubmit");
+  var userlocation = $("#userlocation");
+  var calendar = $("#datepicker");
+  var events = $("#events");
+  var attractions = $("#attractions");
+  var restaurants = $("#restaurants");
+  var results = $("#results");
+  var eventSelector = $("#eventSelector");
+  var locationSelector = $("#locationSelector");
+  var resultsPage = $("#resultsPage");
+  var resultsPage = $("#resultsPage");
+  var dateFormat = "";
+  var content = "";
+
 $(document).ready(function() {
 
   var config = {
@@ -14,22 +53,26 @@ $(document).ready(function() {
   var database = firebase.database();
   var auth = firebase.auth();
   var user = firebase.auth().currentUser;
-  var email = $("#email");
-  var password = $("#password");
-  var login = $("#login");
-  var signup = $("#signup");
-  var logout = $("#logout");
-  var submit = $("#submit");
-  var submit2 = $("#submit2");
-  var signupsub = $("#signupsubmit");
-  var loginsub = $("#loginsubmit");
-  var userlocation = $("#userlocation");
-  var calendar = $("#datepicker");
-  var events = $("#events");
-  var attractions = $("#attractions");
-  var restaurants = $("#restaurants");
-  var results = $("#results");
-  var dateFormat = "";
+  // var email = $("#email");
+  // var password = $("#password");
+  // var login = $("#login");
+  // var signup = $("#signup");
+  // var logout = $("#logout");
+  // var submit = $("#submit");
+  // var submit2 = $("#submit2");
+  // var signupsub = $("#signupsubmit");
+  // var loginsub = $("#loginsubmit");
+  // var userlocation = $("#userlocation");
+  // var calendar = $("#datepicker");
+  // var events = $("#events");
+  // var attractions = $("#attractions");
+  // var restaurants = $("#restaurants");
+  // var results = $("#results");
+  // var eventSelector = $("#eventSelector");
+  // var locationSelector = $("#locationSelector");
+  // var resultsPage = $("#resultsPage");
+  // var resultsPage = $("#resultsPage");
+  // var dateFormat = "";
   var foursquareClientID = "H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM";
   var foursquareClientSecret = "1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C";
   var eventfulAPI = "app_key=Qm9xNFv7PP2fqZVZ";
@@ -40,10 +83,10 @@ $(document).ready(function() {
   var calendarVal = "";
   var restaurantsVal = "";
   var eventVal = "";
-  console.log(locationVal);
-  console.log(calendarVal);
 
   logout.hide();
+  eventSelector.hide();
+  resultsPage.hide();
 
   login.on('click', function(event) {
     console.log("login ran");
@@ -103,56 +146,100 @@ $(document).ready(function() {
     };
   });
 
-  submit.on("click", function() {
+  submit.on("click", function(event) {
+    event.preventDefault();
     locationVal = userlocation.val().trim();
     calendarVal = calendar.val().trim();
-    console.log(locationVal, "locationVal ran");
-    console.log(calendarVal, "calendarVal ran");
-    dateFormat = moment(calendarVal).format('YYYY MM DD');
-    console.log(dateFormat);
-    window.location.href = "eventselector.html";
+    dateFormat = moment(calendarVal).format('YYYYMMDD');
+    //window.location.href = "eventselector.html";
+    eventSelector.show();
+    locationSelector.hide();
+    resultsPage.hide();
   });
 
-  submit2.on("click", function() {
+  submit2.on("click", function(e) {
+    e.preventDefault();
     eventVal = $("#dropdown-content").val().trim();
-    console.log(eventVal, "eventSelected ran")
     restaurantsVal = restaurants.val().trim();
-    console.log(restaurantsVal, "restaurantsVal ran");
+    eventSelector.hide();
+    locationSelector.hide();
+    resultsPage.show();
 
-    var foursquareQuery = "https://api.foursquare.com/v2/venues/search?client_id=H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM&client_secret=1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C&v=20130815 &ll=40.7,-74 &query=" + restaurantsVal;
-    var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=" + locationVal + "&date=" + dateFormat + "&app_key=Qm9xNFv7PP2fqZVZ";
-    console.log(foursquareQuery);
-    console.log(eventfulQuery);
-    console.log(dateFormat);
-    console.log(locationVal);
-    
-    $.ajax({
-      url: eventfulQuery,
-      method: "GET",
-      dataType: 'jsonp'
-    }).done(function(response) {
-      console.log(response);
-    });
+    var foursquareQuery = "https://api.foursquare.com/v2/venues/search?client_id=H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM&client_secret=1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C&categoryId=4d4b7105d754a06374d81259&limit=5&near=" + locationVal + "&v=20130815 &ll=40.7,-74 &query=" + restaurantsVal;
+    var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=" + eventVal + "&location=" + locationVal + "&date=" + dateFormat + "&page_size=5&app_key=Qm9xNFv7PP2fqZVZ";
 
     $.ajax({
       url: foursquareQuery,
       method: "GET",
       dataType: 'jsonp'
-    }).done(function(response) {
-        console.log(response);
+    }).done(function(foursquareRes) {
+      console.log(foursquareRes);
+      googleMap = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: foursquareRes.response.geocode.feature.geometry.center
+        });
+        $.each(foursquareRes.response.venues, function(key, value){
+          // do stuff here
+          content = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h3 id="firstHeading" class="firstHeading">' + value.name + '</h3>' +
+            '<div id="bodyContent">' + value.contact.formattedPhone + '</div>' + '<div id=contact>' + value.location.formattedAddress + '</div>';
+          
+          var infowindow = new google.maps.InfoWindow({
+            content: content
+          });
+          var marker = new google.maps.Marker({
+            position: {lat:value.location.lat, lng:value.location.lng},
+            map: googleMap,
+            title: value.name
+          });
+
+          marker.addListener('click', function() {
+            infowindow.open(googleMap, marker);
+          });
+
+          $("#details").append(content);
+
+      });
+      //Show you map
+      
     });
 
-  });
-  //Location Selector Page
-  var googleQuery = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCmuGjtB5AKU9b4DFOD3c6m7g2I4jlTP_4&callback=initMap&libraries=places,visualization";
+    $.ajax({
+      url: eventfulQuery,
+      method: "GET",
+      dataType: 'jsonp'
+    }).done(function(googleResponse) {
+      console.log(googleResponse);
+        $.each(googleResponse.events.event, function(key, value){
+          
+          content = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h3 id="firstHeading" class="firstHeading">' + value.venue_name + '</h3>' +
+            '<div id="bodyContent">' + value.venue_address + '</div>' + '<div id=url>' + value.url + '</div>' + '<div id=startTime>Start Time: ' + value.start_time + '</div>' + '<div id=endTime>Stop Time:' + value.stop_time + '</div>';
+          
+          var infowindow = new google.maps.InfoWindow({
+            content: content
+          });
+          var marker = new google.maps.Marker({
+            position: {lat:parseFloat(value.latitude), lng:parseFloat(value.longitude)},
+            title: value.venue_name,
+            map:googleMap
+          });
 
-  $.ajax({
-    url: googleQuery,
-    method: "GET",
-    dataType: 'jsonp'
-  }).done(function(response) {
-      console.log(response);
-  });
+          marker.addListener('click', function() {
+            infowindow.open(googleMap, marker);
+          });
+
+          $("#details").append(content);
+
+      });
+
+    });  
+
+  });  
 
   //create calendar
   $(function() {
@@ -165,3 +252,4 @@ $(document).ready(function() {
   });
 
 });
+
