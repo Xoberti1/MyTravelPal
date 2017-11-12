@@ -15,6 +15,22 @@ function initMap() {
 
 }  
 
+$(document).ready(function() {
+
+  var config = {
+    apiKey: "AIzaSyAH08gCmyuhWsZ-2HLKIatrYzH3iRYbnyc",
+    authDomain: "mytravelpal-ebf41.firebaseapp.com",
+    databaseURL: "https://mytravelpal-ebf41.firebaseio.com",
+    projectId: "mytravelpal-ebf41",
+    storageBucket: "mytravelpal-ebf41.appspot.com",
+    messagingSenderId: "287994305952"
+  }; 
+
+  firebase.initializeApp(config);
+
+  var database = firebase.database();
+  var auth = firebase.auth();
+  var user = firebase.auth().currentUser;
   var email = $("#email");
   var password = $("#password");
   var login = $("#login");
@@ -36,43 +52,6 @@ function initMap() {
   var resultsPage = $("#resultsPage");
   var dateFormat = "";
   var content = "";
-
-$(document).ready(function() {
-
-  var config = {
-    apiKey: "AIzaSyAH08gCmyuhWsZ-2HLKIatrYzH3iRYbnyc",
-    authDomain: "mytravelpal-ebf41.firebaseapp.com",
-    databaseURL: "https://mytravelpal-ebf41.firebaseio.com",
-    projectId: "mytravelpal-ebf41",
-    storageBucket: "mytravelpal-ebf41.appspot.com",
-    messagingSenderId: "287994305952"
-  }; 
-
-  firebase.initializeApp(config);
-
-  var database = firebase.database();
-  var auth = firebase.auth();
-  var user = firebase.auth().currentUser;
-  // var email = $("#email");
-  // var password = $("#password");
-  // var login = $("#login");
-  // var signup = $("#signup");
-  // var logout = $("#logout");
-  // var submit = $("#submit");
-  // var submit2 = $("#submit2");
-  // var signupsub = $("#signupsubmit");
-  // var loginsub = $("#loginsubmit");
-  // var userlocation = $("#userlocation");
-  // var calendar = $("#datepicker");
-  // var events = $("#events");
-  // var attractions = $("#attractions");
-  // var restaurants = $("#restaurants");
-  // var results = $("#results");
-  // var eventSelector = $("#eventSelector");
-  // var locationSelector = $("#locationSelector");
-  // var resultsPage = $("#resultsPage");
-  // var resultsPage = $("#resultsPage");
-  // var dateFormat = "";
   var foursquareClientID = "H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM";
   var foursquareClientSecret = "1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C";
   var eventfulAPI = "app_key=Qm9xNFv7PP2fqZVZ";
@@ -175,7 +154,7 @@ $(document).ready(function() {
     }).done(function(foursquareRes) {
       console.log(foursquareRes);
       googleMap = new google.maps.Map(document.getElementById('map'), {
-          zoom: 12,
+          zoom: 11,
           center: foursquareRes.response.geocode.feature.geometry.center
         });
         $.each(foursquareRes.response.venues, function(key, value){
@@ -218,7 +197,7 @@ $(document).ready(function() {
             '<div id="siteNotice">'+
             '</div>'+
             '<h3 id="firstHeading" class="firstHeading">' + value.venue_name + '</h3>' +
-            '<div id="bodyContent">' + value.venue_address + '</div>' + '<div id=url>' + value.url + '</div>' + '<div id=startTime>Start Time: ' + value.start_time + '</div>' + '<div id=endTime>Stop Time:' + value.stop_time + '</div>';
+            '<div id="bodyContent">' + value.venue_address + '</div>' + '<div id=url>' + value.url + '</div>' + '<div id=startTime>Start Time: ' + value.start_time + '</div>';
           
           var infowindow = new google.maps.InfoWindow({
             content: content
