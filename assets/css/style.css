@@ -1,4 +1,3 @@
-
 .circle-div {
     width: 400px;
     height: 400px;
@@ -16,26 +15,22 @@ form {
     height: 150px;
     text-align: center;
 }
-.panel{
-    border: none;
-    border-style: none;
-    margin-bottom: 0px;
-}
-.container {
-    background-image: url(../css/cityimage.jpg);
-    background-position: center center;
-    background-attachment: fixed;
-    background-repeat: repeat-x;
-}
 .panel-default{
     background-image: url(../css/cityimage.jpg);
     background-position: center center;
     background-attachment: fixed;
     background-repeat: repeat-x;
-}    
+}
+.panel{
+    border: none;
+    border-style: none;
+    margin-bottom: 0px;
+}
 .jumbotron {
+    font-family: 'Julius Sans One', sans-serif;
+    font-weight: bolder;
     text-align: center;
-    background-color: white;
+    background-color: rgba(255,255,255,0.5);
 }
 #dropdown-content {
     display: block;
@@ -43,6 +38,24 @@ form {
     height: 34px;
     padding: 6px 12px;
     font-size: 14px;    
+}
+
+#results {
+    margin: auto;
+    width: 50%;
+    height: 300px;
+    padding: 10px;
+    background-color: white;
+}
+/*container with results*/
+.container {
+    background-image: url(../css/cityimage.jpg);
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: repeat-x;
+}
+h2 {
+    font-family: 'Julius Sans One', sans-serif;
 }
 /*datepicker container styling*/
 .ui-datepicker,
