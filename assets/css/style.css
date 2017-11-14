@@ -32,6 +32,9 @@ form {
     text-align: center;
     background-color: rgba(255,255,255,0.5);
 }
+.btn-default{
+    width: 130px;
+}
 #dropdown-content {
     display: block;
     width: 100%;
@@ -39,7 +42,12 @@ form {
     padding: 6px 12px;
     font-size: 14px;    
 }
-
+#googleMap {
+    margin: auto;
+    width: 800px;
+    height: 400px;
+    border: 1px solid black;
+}
 #results {
     margin: auto;
     width: 50%;
@@ -49,6 +57,7 @@ form {
 }
 /*container with results*/
 .container {
+    width: 1280px;
     background-image: url(../css/cityimage.jpg);
     background-position: center center;
     background-attachment: fixed;
@@ -56,6 +65,8 @@ form {
 }
 h2 {
     font-family: 'Julius Sans One', sans-serif;
+    font-weight: bolder;
+    text-decoration: underline;
 }
 /*datepicker container styling*/
 .ui-datepicker,
@@ -78,6 +89,7 @@ h2 {
     text-transform: uppercase;
     font-family: Tahoma;
     font-size: 12px;
+    color: white;
  
     background: #141517;
  
@@ -137,7 +149,7 @@ h2 {
     top: -2px;
     padding: 5px;
     cursor: pointer;
-    color: red;
+  
 }
  
 .ui-datepicker-prev {
@@ -150,13 +162,19 @@ h2 {
     padding-right: 0;
 }
  
-.ui-datepicker-prev span,
+.ui-datepicker-prev span{
+    display: block;
+    width: 5px;
+    height: 10px;
+    text-indent: -9999px;
+    background-image: url(../css/prevArrow.png);
+}
 .ui-datepicker-next span{
     display: block;
     width: 5px;
     height: 10px;
     text-indent: -9999px;
-    background-image: url(../img/arrows.png);
+    background-image: url(../css/nextArrow.png);
 }
  
 .ui-datepicker-prev span { 
@@ -210,8 +228,13 @@ h2 {
 .ui-datepicker-other-month .ui-state-default { 
     color: #565656; 
 }
-
+/* Always set the map height explicitly to define the size of the div
+       element that contains the map. */
 #map {
-	width: 100%;
-	height: 400px;
+width: 100%;
+height: 400px;
+}
+#firstHeading{
+    font: 18px arial, sans-serif;
+    color: green;
 }
