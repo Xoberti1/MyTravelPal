@@ -16,7 +16,7 @@ function initMap() {
 }  
 
 $(document).ready(function() {
-
+// Firebase configuration code
   var config = {
     apiKey: "AIzaSyAH08gCmyuhWsZ-2HLKIatrYzH3iRYbnyc",
     authDomain: "mytravelpal-ebf41.firebaseapp.com",
@@ -28,6 +28,7 @@ $(document).ready(function() {
 
   firebase.initializeApp(config);
 
+// variables
   var database = firebase.database();
   var auth = firebase.auth();
   var user = firebase.auth().currentUser;
@@ -36,6 +37,8 @@ $(document).ready(function() {
   var login = $("#login");
   var signup = $("#signup");
   var logout = $("#logout");
+  var logout2 = $("#logout2");
+  var logout3 = $("#logout3");
   var submit = $("#submit");
   var submit2 = $("#submit2");
   var signupsub = $("#signupsubmit");
@@ -56,8 +59,6 @@ $(document).ready(function() {
   var foursquareClientSecret = "1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C";
   var eventfulAPI = "app_key=Qm9xNFv7PP2fqZVZ";
   var eventfulURL = "http://api.eventful.com/json/events/search?"
-  //var queryURL = "http://api.eventful.com/rest/events/search?" + "app_key=Qm9xNFv7PP2fqZVZ&" + "Houston" + "&" + "books";
-  //var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=music&location=" + locationVal + "&date=" + dateFormat + "&app_key=Qm9xNFv7PP2fqZVZ";
   var locationVal = "";
   var calendarVal = "";
   var restaurantsVal = "";
@@ -105,6 +106,16 @@ $(document).ready(function() {
 
   //logout event
   logout.on('click', function() {
+    firebase.auth().signOut();
+    window.location.href="homepage.html";
+  });
+
+  logout2.on('click', function() {
+    firebase.auth().signOut();
+    window.location.href="homepage.html";
+  });
+
+  logout3.on('click', function() {
     firebase.auth().signOut();
     window.location.href="homepage.html";
   });
