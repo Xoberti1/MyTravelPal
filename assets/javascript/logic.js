@@ -1,6 +1,7 @@
+//variable for google map (it has to be in global scope)
 var googleMap;
 
-
+//this is the function to render a google map
 function initMap() {
   var uluru = {lat: -25.363, lng: 131.044};
   var googleMap = new google.maps.Map(document.getElementById('map'), {
@@ -104,17 +105,19 @@ $(document).ready(function() {
       })
   });
 
-  //logout event
+  //logout location selector
   logout.on('click', function() {
     firebase.auth().signOut();
     window.location.href="homepage.html";
   });
 
+  //logout event selector
   logout2.on('click', function() {
     firebase.auth().signOut();
     window.location.href="homepage.html";
   });
 
+  //logout result selector
   logout3.on('click', function() {
     firebase.auth().signOut();
     window.location.href="homepage.html";
@@ -136,6 +139,7 @@ $(document).ready(function() {
     };
   });
 
+//location selector page stores user location and date on submit
   submit.on("click", function(event) {
     event.preventDefault();
     locationVal = userlocation.val().trim();
@@ -147,6 +151,7 @@ $(document).ready(function() {
     resultsPage.hide();
   });
 
+//on submit event data and restaurant data will be stored and put into api calls
   submit2.on("click", function(e) {
     e.preventDefault();
     eventVal = $("#dropdown-content").val().trim();
@@ -155,74 +160,82 @@ $(document).ready(function() {
     locationSelector.hide();
     resultsPage.show();
 
+    //api urls
     var foursquareQuery = "https://api.foursquare.com/v2/venues/search?client_id=H0YEHH5DRVVEMJKR2ALTMRWEGFNKKXT21AQTWVFTWTLNG1TM&client_secret=1KZDNOHSXFBTWFHDHFZ4X3DFAZHWAAYXD1HCRY0XLXA33L2C&categoryId=4d4b7105d754a06374d81259&limit=5&near=" + locationVal + "&v=20130815 &ll=40.7,-74 &query=" + restaurantsVal;
     var eventfulQuery = "http://api.eventful.com/json/events/search?keywords=" + eventVal + "&location=" + locationVal + "&date=" + dateFormat + "&page_size=5&app_key=Qm9xNFv7PP2fqZVZ";
 
+    //ajax call for foursquare api
     $.ajax({
       url: foursquareQuery,
       method: "GET",
       dataType: 'jsonp'
     }).done(function(foursquareRes) {
+      // once this has happened put the information into google maps
       console.log(foursquareRes);
+      //create a new google map when a search it run
       googleMap = new google.maps.Map(document.getElementById('map'), {
           zoom: 11,
           center: foursquareRes.response.geocode.feature.geometry.center
         });
+      // the data from each item in the api call will be run through this way
         $.each(foursquareRes.response.venues, function(key, value){
-          // do stuff here
+          // the data is made readable this way
           content = '<div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
             '<h3 id="firstHeading" class="firstHeading">' + value.name + '</h3>' +
             '<div id="bodyContent">' + value.contact.formattedPhone + '</div>' + '<div id=contact>' + value.location.formattedAddress + '</div>';
-          
+          //when you click the pin on the map the readable data written to content will be presented in a text bubble
           var infowindow = new google.maps.InfoWindow({
             content: content
           });
+          //this makes the pins appear at the latitude and longitude listed for each item
           var marker = new google.maps.Marker({
             position: {lat:value.location.lat, lng:value.location.lng},
             map: googleMap,
             title: value.name
           });
-
+          //this makes the info window work when clicking the marker
           marker.addListener('click', function() {
             infowindow.open(googleMap, marker);
           });
-
+          //turns the data in content into a list below the map
           $("#details").append(content);
 
       });
-      //Show you map
       
     });
 
+    //ajax call run on the submit click
     $.ajax({
       url: eventfulQuery,
       method: "GET",
       dataType: 'jsonp'
     }).done(function(googleResponse) {
       console.log(googleResponse);
+      //once data is returned the call is mined for data at listed location
         $.each(googleResponse.events.event, function(key, value){
-          
+          // the data is made readable this way
           content = '<div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
             '<h3 id="firstHeading" class="firstHeading">' + value.venue_name + '</h3>' +
             '<div id="bodyContent">' + value.venue_address + '</div>' + '<div id=url>' + value.url + '</div>' + '<div id=startTime>Start Time: ' + value.start_time + '</div>';
-          
+          //when you click the pin on the map the readable data written to content will be presented in a text bubble
           var infowindow = new google.maps.InfoWindow({
             content: content
           });
+          //this makes the info window work when clicking the marker
           var marker = new google.maps.Marker({
             position: {lat:parseFloat(value.latitude), lng:parseFloat(value.longitude)},
             title: value.venue_name,
             map:googleMap
           });
-
+          //this makes the info window work when clicking the marker
           marker.addListener('click', function() {
             infowindow.open(googleMap, marker);
           });
-
+          //turns the data in content into a list below the map
           $("#details").append(content);
 
       });
